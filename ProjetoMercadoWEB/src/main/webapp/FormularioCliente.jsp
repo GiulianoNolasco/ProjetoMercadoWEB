@@ -74,7 +74,7 @@ if (id>0){
 		titulo = "Alterando Cliente " + id;
 	nome_cliente = retorno.getString("nome_cliente");
 	idade = retorno.getString("idade_cliente");
-	situacao = retorno.getString("situacao_cliente");
+	situacao = retorno.getString("situacao_cliente").toUpperCase();
 	if(situacao.equals("A")){
 		ativo = true;
 	}else{

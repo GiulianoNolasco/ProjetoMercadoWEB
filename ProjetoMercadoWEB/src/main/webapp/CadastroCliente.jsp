@@ -82,12 +82,12 @@
   
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Nome Cliente</th>
-            <th>Idade</th>
-            <th>Situação</th>
+            <th style="text-align: center;">ID</th>
+            <th style="text-align: center;">Nome Cliente</th>
+            <th style="text-align: center;">Idade</th>
+            <th style="text-align: center;">Situação</th>
             
-            <th>Ações</th>
+            <th style="text-align: center;">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -105,9 +105,9 @@
         	id = retorno.getString("id_cliente");
         	nome = retorno.getString("nome_cliente");
         	idade = retorno.getString("idade_cliente");
-        	situacao = retorno.getString("situacao_cliente");
+        	situacao = retorno.getString("situacao_cliente").toUpperCase();
         		if(situacao.equals("A")){
-        			situacao_desc = "ativo";
+        			situacao_desc = "Ativo";
         		}else{
         			situacao_desc = "Inativo";
         	}
@@ -115,12 +115,12 @@
 			%>
            
             <tr>
-                      <td><%out.write(id);%></td>
-                      <td><%out.write(nome);%></td>
-                      <td><%out.write(idade);%></td>
-                      <td><%out.write(situacao_desc);%></td>
+                      <td style="text-align: center;"><%out.write(id);%></td>
+                      <td style="text-align: center;"><%out.write(nome);%></td>
+                      <td style="text-align: center;"><%out.write(idade);%></td>
+                      <td style="text-align: center;"><%out.write(situacao_desc);%></td>
                       
-                      <td>
+                      <td style="text-align: center;">
                         <a href="FormularioCliente.jsp?id_cliente=<%out.write(id);%>">
                           <button type="button" class="btn btn-primary">Editar</button>
                         </a>

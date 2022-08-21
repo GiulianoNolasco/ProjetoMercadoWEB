@@ -6,10 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Mercado - Funcionários</title>
-
+<title>Mercado - Produtos</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
 </head>
 <body>
 
@@ -59,90 +59,81 @@
 <p>  <p>
 
 
-<%
-BancoDAO db = new BancoDAO();
-int id = Integer.parseInt(request.getParameter("id_funcionario"));
-String nome_funcionario = "";
-String idade = "";
-String situacao = "";
-String titulo = "Cadastrando um novo Funcionário";
-boolean ativo = true;
-
-if (id>0){
-	ResultSet retorno = db.retornaDados("select * from funcionarios where id_funcionario	 = " + id);
-	if (retorno.next()){
-		titulo = "Alterando Funcionário " + id;
-	nome_funcionario = retorno.getString("nome_funcionario");
-	idade = retorno.getString("idade");
-	situacao = retorno.getString("situacao").toUpperCase();
-	if(situacao.equals("A")){
-		ativo = true;
-	}else{
-		ativo = false;
-	}
-	}
-	}
-
-
-%>
-
 <body class="bg-dark text-light">
 
     <div class="container">
 
       <div class="jumbotron bg-light">
         
-        <h1 style="color:black;">CADASTRO DE FUNCIONÁRIOS</h1>
+        <h1 style="color:black;">PRODUTOS</h1>
       </div>
-
 
 <main>
-
+  
   <section>
-    <a href="CadastroFuncionario.jsp">
-      <button class="btn btn-success">Voltar</button>
+    <a href="FormularioProduto.jsp?id_produto=-1">
+      <button class="btn btn-success">Novo Produto</button>
     </a>
+ 
+  </section>
+  <section>
+
+    <table class="table bg-light mt-3">
+  
+        <thead>
+          <tr>
+            <th style="text-align: center;">ID</th>
+            <th style="text-align: center;">Descrição Produto</th>
+            <th style="text-align: center;">Preço</th>
+            <th style="text-align: center;">Situação</th>
+            
+            <th style="text-align: center;">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+		<%
+        BancoDAO db = new BancoDAO();
+        String id = "";
+        String descricao = "";
+        String preco = "";
+        String situacao = "";
+        String situacao_desc = "";
+    
+        	ResultSet retorno = db.retornaDados("select * from produtos");
+     		while (retorno.next()){
+        	id = retorno.getString("id_produto");
+        	descricao = retorno.getString("descricao_produto");
+        	preco = retorno.getString("preco");
+        	situacao = retorno.getString("situacao").toUpperCase();
+        		if(situacao.equals("A")){
+        			situacao_desc = "Ativo";
+        		}else{
+        			situacao_desc = "Inativo";
+        	}
+        
+			%>
+           
+            <tr>
+                      <td style="text-align: center;"><%out.write(id);%></td>
+                      <td style="text-align: center;"><%out.write(descricao);%></td>
+                      <td style="text-align: center;"><%out.write(preco);%></td>
+                      <td style="text-align: center;"><%out.write(situacao_desc);%></td>
+                      
+                      <td style="text-align: center;">
+
+                        <a href="FormularioProduto.jsp?id_produto=<%out.write(id);%>">
+                          <button type="button" class="btn btn-primary">Editar</button>
+                        </a>
+                        <a href="ExcluirProduto.jsp?id_produto=<%out.write(id);%>">
+                          <button type="button" class="btn btn-danger">Excluir</button>
+                        </a>
+                      </td>
+                    </tr>    <%}%>  </tbody>
+    </table>
+
   </section>
 
-  <h2 class="mt-3"><%out.write(titulo);%></h2>
-
-  <form method="get" action= "SalvaFuncionario.jsp">
-  <input type = "hidden" name= "id_funcionario" value= "<%out.write(String.valueOf(id)); %>">
-
-    <div class="form-group">
-      <label>Nome Funcionário</label>
-      <input type="text" class="form-control" name="nome_funcionario" value="<%out.write(nome_funcionario);%>">
-    </div>
-
-    <div class="form-group">
-      <label>Idade</label>
-      <input type="number" class="form-control" name="idade" value="<%out.write(idade);%>">
-    </div>
-
-    <div class="form-group">
-      <label>Situação</label>
-
-      <div>
-          <div class="form-check form-check-inline">
-            <label class="form-control">
-              <input type="radio" name="situacao" value="A" <% if (ativo){out.write("checked=''");} %>> Ativo
-            </label>
-          </div>
-
-          <div class="form-check form-check-inline">
-            <label class="form-control">
-              <input type="radio" name="situacao" value="I"<% if (!ativo){out.write("checked=''");} %>> Inativo
-            </label>	
-          </div>
-      </div>
-
-    </div>
-
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">Cadastrar</button>
-    </div>
-
-  </form>
 
 </main>
     <!-- .container -->

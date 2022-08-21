@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Mercado - Funcionários</title>
+<title>Mercado - Vendas</title>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
@@ -58,23 +58,24 @@
       
 <p>  <p>
 
-
+      
 <%
 BancoDAO db = new BancoDAO();
-int id = Integer.parseInt(request.getParameter("id_funcionario"));
-String nome_funcionario = "";
-String idade = "";
-String situacao = "";
-String titulo = "Cadastrando um novo Funcionário";
+int id = Integer.parseInt(request.getParameter("id_venda"));
+String fk_cliente = "";
+String fk_produto = "";
+String fk_funcionario = "";
+String quantidade = "";
+String titulo = "Cadastrando uma nova Venda";
 boolean ativo = true;
 
 if (id>0){
-	ResultSet retorno = db.retornaDados("select * from funcionarios where id_funcionario	 = " + id);
+	ResultSet retorno = db.retornaDados("select * from vendas where id_venda = " + id);
 	if (retorno.next()){
-		titulo = "Alterando Funcionário " + id;
-	nome_funcionario = retorno.getString("nome_funcionario");
-	idade = retorno.getString("idade");
-	situacao = retorno.getString("situacao").toUpperCase();
+		titulo = "Alterando Venda " + id;
+	nome_cliente = retorno.getString("nome_cliente");
+	idade = retorno.getString("idade_cliente");
+	situacao = retorno.getString("situacao_cliente").toUpperCase();
 	if(situacao.equals("A")){
 		ativo = true;
 	}else{
@@ -92,31 +93,31 @@ if (id>0){
 
       <div class="jumbotron bg-light">
         
-        <h1 style="color:black;">CADASTRO DE FUNCIONÁRIOS</h1>
+        <h1 style="color:black;">CADASTRO DE CLIENTES</h1>
       </div>
 
 
 <main>
 
   <section>
-    <a href="CadastroFuncionario.jsp">
+    <a href="CadastroCliente.jsp">
       <button class="btn btn-success">Voltar</button>
     </a>
   </section>
 
   <h2 class="mt-3"><%out.write(titulo);%></h2>
 
-  <form method="get" action= "SalvaFuncionario.jsp">
-  <input type = "hidden" name= "id_funcionario" value= "<%out.write(String.valueOf(id)); %>">
+  <form method="get" action= "SalvaCliente.jsp">
+  <input type = "hidden" name= "id_cliente" value= "<%out.write(String.valueOf(id)); %>">
 
     <div class="form-group">
-      <label>Nome Funcionário</label>
-      <input type="text" class="form-control" name="nome_funcionario" value="<%out.write(nome_funcionario);%>">
+      <label>Nome cliente</label>
+      <input type="text" class="form-control" name="nome_cliente" value="<%out.write(nome_cliente);%>">
     </div>
 
     <div class="form-group">
       <label>Idade</label>
-      <input type="number" class="form-control" name="idade" value="<%out.write(idade);%>">
+      <input type="number" class="form-control" name="idade_cliente" value="<%out.write(idade);%>">
     </div>
 
     <div class="form-group">
@@ -125,13 +126,13 @@ if (id>0){
       <div>
           <div class="form-check form-check-inline">
             <label class="form-control">
-              <input type="radio" name="situacao" value="A" <% if (ativo){out.write("checked=''");} %>> Ativo
+              <input type="radio" name="situacao_cliente" value="A" <% if (ativo){out.write("checked=''");} %>> Ativo
             </label>
           </div>
 
           <div class="form-check form-check-inline">
             <label class="form-control">
-              <input type="radio" name="situacao" value="I"<% if (!ativo){out.write("checked=''");} %>> Inativo
+              <input type="radio" name="situacao_cliente" value="I"<% if (!ativo){out.write("checked=''");} %>> Inativo
             </label>	
           </div>
       </div>
