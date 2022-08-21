@@ -6,13 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Mercado - Clientes</title>
-
+<title>Mercado - Funcionários</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
 </head>
 <body>
-
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white"href="index.jsp">
         <img src="Imagens/logoNav.jpg" width=200 height=80>
@@ -58,91 +57,81 @@
       
 <p>  <p>
 
-      
-<%
-BancoDAO db = new BancoDAO();
-int id = Integer.parseInt(request.getParameter("id_cliente"));
-String nome_cliente = "";
-String idade = "";
-String situacao = "";
-String titulo = "Cadastrando um novo Cliente";
-boolean ativo = true;
-
-if (id>0){
-	ResultSet retorno = db.retornaDados("select * from clientes where id_cliente = " + id);
-	if (retorno.next()){
-		titulo = "Alterando Cliente " + id;
-	nome_cliente = retorno.getString("nome_cliente");
-	idade = retorno.getString("idade_cliente");
-	situacao = retorno.getString("situacao_cliente");
-	if(situacao.equals("A")){
-		ativo = true;
-	}else{
-		ativo = false;
-	}
-	}
-	}
-
-
-%>
-
 <body class="bg-dark text-light">
 
     <div class="container">
 
       <div class="jumbotron bg-light">
         
-        <h1 style="color:black;">CADASTRO DE CLIENTES</h1>
+        <h1 style="color:black;">FUNCIONÁRIOS</h1>
       </div>
-
 
 <main>
-
+  
   <section>
-    <a href="CadastroCliente.jsp">
-      <button class="btn btn-success">Voltar</button>
+    <a href="FormularioFuncionario.jsp?id_funcionario=-1">
+      <button class="btn btn-success">Novo Funcionário</button>
     </a>
+ 
+  </section>
+  
+  <section>
+
+    <table class="table bg-light mt-3">
+  
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome Funcionário</th>
+            <th>Idade</th>
+            <th>Situação</th>
+            
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+		<%
+        BancoDAO db = new BancoDAO();
+        String id = "";
+        String nome = "";
+        String idade = "";
+        String situacao = "";
+        String situacao_desc = "";
+    
+        	ResultSet retorno = db.retornaDados("select * from funcionarios");
+     		while (retorno.next()){
+        	id = retorno.getString("id_funcionario");
+        	nome = retorno.getString("nome_funcionario");
+        	idade = retorno.getString("idade");
+        	situacao = retorno.getString("situacao");
+        		if(situacao.equals("A")){
+        			situacao_desc = "ativo";
+        		}else{
+        			situacao_desc = "Inativo";
+        	}
+        
+			%>
+           
+            <tr>
+                      <td><%out.write(id);%></td>
+                      <td><%out.write(nome);%></td>
+                      <td><%out.write(idade);%></td>
+                      <td><%out.write(situacao_desc);%></td>
+                      
+                      <td>
+                        <a href="FormularioFuncionario.jsp?id_funcionario=<%out.write(id);%>">
+                          <button type="button" class="btn btn-primary">Editar</button>
+                        </a>	
+                        <a href="ExcluirFuncionario.jsp?id_funcionario=<%out.write(id);%>">
+                          <button type="button" class="btn btn-danger">Excluir</button>
+                        </a>
+                      </td>
+                    </tr>    <%}%>  </tbody>
+    </table>
+
   </section>
 
-  <h2 class="mt-3"><%out.write(titulo);%></h2>
-
-  <form method="get" action= "SalvaCliente.jsp">
-  <input type = "hidden" name= "id_cliente" value= "<%out.write(String.valueOf(id)); %>">
-
-    <div class="form-group">
-      <label>Nome cliente</label>
-      <input type="text" class="form-control" name="nome_cliente" value="<%out.write(nome_cliente);%>">
-    </div>
-
-    <div class="form-group">
-      <label>Idade</label>
-      <input type="number" class="form-control" name="idade_cliente" value="<%out.write(idade);%>">
-    </div>
-
-    <div class="form-group">
-      <label>Situação</label>
-
-      <div>
-          <div class="form-check form-check-inline">
-            <label class="form-control">
-              <input type="radio" name="situacao_cliente" value="A" <% if (ativo){out.write("checked=''");} %>> Ativo
-            </label>
-          </div>
-
-          <div class="form-check form-check-inline">
-            <label class="form-control">
-              <input type="radio" name="situacao_cliente" value="I"<% if (!ativo){out.write("checked=''");} %>> Inativo
-            </label>	
-          </div>
-      </div>
-
-    </div>
-
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">Cadastrar</button>
-    </div>
-
-  </form>
 
 </main>
     <!-- .container -->

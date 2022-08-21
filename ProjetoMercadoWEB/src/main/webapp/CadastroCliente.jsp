@@ -6,19 +6,66 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Mercado - Clientes</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 
 </head>
 <body>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white"href="index.jsp">
+        <img src="Imagens/logoNav.jpg" width=200 height=80>
+     
+        <a class="navbar-brand" href="index.jsp">Página inicial</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+       
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="CadastroCliente.jsp">Clientes</a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="CadastroFuncionario.jsp">Funcionários</a>
+            </li>
+          </ul>
+        </div>
+        
+          <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="CadastroProduto.jsp">Produtos</a>
+            </li>
+          </ul>
+        </div>
+        
+          <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="CadastroVenda.jsp">Vendas</a>
+            </li>
+          </ul>
+        </div>
+       
+      </nav>
+      
+<p>  <p>
+
+
 <body class="bg-dark text-light">
 
     <div class="container">
 
       <div class="jumbotron bg-light">
         
-        <h1 style="color:black;">CADASTRO DE CLIENTES</h1>
+        <h1 style="color:black;">CLIENTES</h1>
       </div>
 
 <main>
@@ -28,9 +75,6 @@
       <button class="btn btn-success">Novo Cliente</button>
     </a>
  
-    <a href="index.jsp">
-      <button class="btn btn-success">Voltar</button>
-    </a>
   </section>
   <section>
 
@@ -39,8 +83,8 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Nome cliente</th>
-            <th>idade</th>
+            <th>Nome Cliente</th>
+            <th>Idade</th>
             <th>Situação</th>
             
             <th>Ações</th>
@@ -51,7 +95,7 @@
 		<%
         BancoDAO db = new BancoDAO();
         String id = "";
-        String nome_cliente = "";
+        String nome = "";
         String idade = "";
         String situacao = "";
         String situacao_desc = "";
@@ -59,7 +103,7 @@
         	ResultSet retorno = db.retornaDados("select * from clientes");
      		while (retorno.next()){
         	id = retorno.getString("id_cliente");
-        	nome_cliente = retorno.getString("nome_cliente");
+        	nome = retorno.getString("nome_cliente");
         	idade = retorno.getString("idade_cliente");
         	situacao = retorno.getString("situacao_cliente");
         		if(situacao.equals("A")){
@@ -72,7 +116,7 @@
            
             <tr>
                       <td><%out.write(id);%></td>
-                      <td><%out.write(nome_cliente);%></td>
+                      <td><%out.write(nome);%></td>
                       <td><%out.write(idade);%></td>
                       <td><%out.write(situacao_desc);%></td>
                       
